@@ -1,0 +1,9 @@
+[run]
+branch = True
+omit =
+    */__init__.py
+    cosipy/tests/*
+    data/*
+    docs/*
+    logs/*
+    utilities/hpc/*
