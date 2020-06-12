@@ -1,4 +1,0 @@
-/data/scratch/torresc/cosipy/utilities/aws2cosipy/aws2cosipy.py:423: RuntimeWarning: invalid value encountered in less
-  aspect[aspect<180] = aspect[aspect<180]*-1.0
-/data/scratch/torresc/cosipy/utilities/aws2cosipy/aws2cosipy.py:424: RuntimeWarning: invalid value encountered in greater_equal
-  aspect[aspect>=180] = 360.0 - aspect[aspect>=180]

@@ -379,7 +379,7 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     print('Interpolate CR file to grid')
     alb_interp[:,:] = albedo_timescale_1 + (ds.HGT.values-stationAlt)*lapse_albedo_1
     alb_interp[alb_interp < 0.5 ]  = 0.5
-    alb_interp[alb_interp > 30 ] = 30
+    alb_interp[alb_interp > 15 ] = 15
     snow_interp[:,:] = int_snowheight + (ds.HGT.values-stationAlt)*lapse_snow
     alb_interp_ice[:,:] = albedo_ice + (ds.HGT.values-stationAlt)*lapse_ice
     alb_interp_ice[alb_interp_ice < 0.10 ] = 0.10
@@ -417,11 +417,13 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
             N_interp[t,:,:] = N[t]
 
     # Change aspect to south==0, east==negative, west==positive
-    ds['ASPECT'] = np.mod(ds['ASPECT']+180.0, 360.0)
-    mask = ds['ASPECT'].where(ds['ASPECT']<=180.0)
-    aspect = ds['ASPECT'].values
-    aspect[aspect<180] = aspect[aspect<180]*-1.0
-    aspect[aspect>=180] = 360.0 - aspect[aspect>=180]
+    # ds['ASPECT'] = np.mod(ds['ASPECT']+180.0, 360.0)
+    # mask = ds['ASPECT'].where(ds['ASPECT']<=180.0)
+    # aspect = ds['ASPECT'].values
+    # aspect[aspect<180] = aspect[aspect<180]*-1.0
+    # aspect[aspect>=180] = 360.0 - aspect[aspect>=180]
+    # ds['ASPECT'] = (('lat','lon'),aspect)
+    aspect = ds['ASPECT'].values - 180.0
     ds['ASPECT'] = (('lat','lon'),aspect)
     print(('Number of glacier cells: %i') % (np.count_nonzero(~np.isnan(ds['MASK'].values))))
     print(('Number of glacier cells: %i') % (np.nansum(ds['MASK'].values)))

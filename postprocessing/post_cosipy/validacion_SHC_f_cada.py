@@ -29,7 +29,7 @@ from scipy.signal import savgol_filter
 #filename_nc  = 'output/Peru_out_350m_20160901-20170831.nc'
 
 filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
-dir_output   = 'out'#''
+dir_output   = 'out1'#''
 name_table0  = 'stat_MB'
 name_figMB   = 'MBtotal'
 name_figMB2  = 'MBpos'
