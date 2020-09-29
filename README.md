@@ -1,1 +1,0 @@
-# cosipy_peru

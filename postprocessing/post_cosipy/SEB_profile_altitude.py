@@ -17,8 +17,7 @@ from my_fun.nan_helper import nan_helper
 from my_fun.hour_to_day_mean import hour_to_day_mean
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'SEB_prof_day'
 

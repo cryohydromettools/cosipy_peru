@@ -20,8 +20,7 @@ from my_fun.reverse_colourmap import reverse_colourmap
 from scipy.signal import savgol_filter
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 
@@ -66,12 +65,12 @@ cmap = mpl.cm.jet
 cmap_r = reverse_colourmap(cmap)
 
 im1 = plt.contourf(lon_nc,lat_nc,MB_all2,1)
-p = im1.collections[0].get_paths()[0]
+p = im1.collections[1].get_paths()[0]
 v = p.vertices
 #y = savgol_filter(x, 5, 2)
 
 fig, ax = plt.subplots(figsize=(4,5))
-im  = ax.contourf(lon_nc,lat_nc,MB_all,30,vmin=-15, vmax=2, cmap=cmap_r)
+im  = ax.contourf(lon_nc,lat_nc,MB_all,30,vmin=-13, vmax=1, cmap=cmap_r)
 ax.plot(v[120:300,0],v[120:300,1],'-w', lw=0.8)
 ax.set_yticks(np.round(np.linspace(np.min(lat_nc), np.max(lat_nc), 5), decimals=2))
 ax.xaxis.set_ticks_position('top')
@@ -81,8 +80,8 @@ ax.yaxis.set_tick_params(which='both', rotation=90)
 ax.set_ylabel('Lat (°)')
 ax.set_xlabel('Lon (°)')
 ax.xaxis.set_label_position('top')
-lab_cbar = np.arange(-14,2,2)
-fig.colorbar(im, label = 'Mass Balance (m w.e.)',
+lab_cbar = np.arange(-12,1,2)
+fig.colorbar(im, label = 'Mass Balance (m w.e.)', format='%1.1f',
              orientation="horizontal", ticks=lab_cbar)
 font_f = 12
 plt.rc('font', size=font_f)          # controls default text sizes

@@ -1,4 +1,4 @@
-"""scent direction
+"""
  This is the COSIPY configuration (init) file.
  Please make your changes here.
 """
@@ -6,10 +6,15 @@
 #-----------------------------------
 # SIMULATION PERIOD 
 #-----------------------------------
-# Zhadang
+# Peru
 time_start = '2016-09-01T00:00'
 time_end   = '2017-08-31T23:00'
-#time_end = '2016-09-01T03:00'
+#time_end   = '2016-09-01T15:00'
+
+# Zhadang
+#time_start = '2009-01-01T06:00'
+#time_end   = '2009-01-10T00:00'
+
 # Hintereisferner
 #time_start = '2018-09-17T08:00'
 #time_end   = '2019-07-03T13:00'
@@ -20,14 +25,15 @@ time_end   = '2017-08-31T23:00'
 time_start_str=(time_start[0:10]).replace('-','')
 time_end_str=(time_end[0:10]).replace('-','')
 
-data_path = './data/'                       
+data_path = './data/'
+
 # Zhadang example
-input_netcdf= 'Peru/Peru_input_1.nc'
-output_netcdf = 'Peru_out_50m_1_'+time_start_str+'-'+time_end_str+'.nc'
+input_netcdf = 'Peru/Peru_input_8.nc'
+output_netcdf = 'Peru_out_9_'+time_start_str+'-'+time_end_str+'.nc'
 
 # Hintereisferner example
-#input_netcdf= 'HEF/HEF_input.nc'
-#output_netcdf = 'HEF_'+time_start_str+'-'+time_end_str+'.nc'
+#input_netcdf = 'HEF/HEF_input.nc'
+#output_netcdf = 'hef.nc'
 
 #-----------------------------------
 # RESTART 
@@ -37,7 +43,7 @@ restart = False                                             # set to true if you
 #-----------------------------------
 # STAKE DATA 
 #-----------------------------------
-stake_evaluation = False
+stake_evaluation = False 
 stakes_loc_file = './data/input/HEF/loc_stakes.csv'         # path to stake location file
 stakes_data_file = './data/input/HEF/data_stakes_hef.csv'   # path to stake data file
 eval_method = 'rmse'                                        # how to evaluate the simulations ('rmse')
@@ -64,7 +70,7 @@ compression_level = 2                                       # Choose value betwe
 #-----------------------------------
 # PARALLELIZATION 
 #-----------------------------------
-slurm_use = True                                           # use SLURM
+slurm_use = True                                         # use SLURM
 workers = None                                              # number of workers, if local cluster is used
 local_port = 8786                                           # port for local cluster
 

@@ -19,8 +19,7 @@ from my_fun.select_season import select_dry, select_wet
 
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'SEB_com_day'
 
@@ -117,12 +116,12 @@ ax.fill_between(var_t, var3,facecolor=('#f97306'),label='Qsens')
 ax.fill_between(var_t, var4,facecolor=([0,1,0]),label='Qlat')
 ax.fill_between(var_t, var5,facecolor=('#929591'),label='QG')
 ax.plot(var_t, var6,'k',lw=0.6, label='Qmet')
-ax.set_yticks(np.arange(-150, 300, 40))
+ax.set_yticks(np.arange(-150, 300, 50))
 date_form = mdates.DateFormatter("%b")
 ax.xaxis.set_major_formatter(date_form)
 ax.set_ylabel('Energy fluxes (W m$^{-2}$)')
 ax.set_xlim(pd.Timestamp('2016-09-01'), pd.Timestamp('2017-08-31'))
-ax.set_ylim(-150,260)
+ax.set_ylim(-150,250)
 ax.legend(loc='lower left',ncol=6, frameon=False)
 font_f = 12
 plt.rc('font', size=font_f)          # controls default text sizes

@@ -4,13 +4,11 @@ from constants import *
 import sys
 
 def penetrating_radiation(GRID, SWnet, dt):
-
+    penetrating_allowed = ['Bintanja95']
     if penetrating_method == 'Bintanja95':
         subsurface_melt, Si = method_Bintanja(GRID, SWnet, dt)
-
     else:
-        print('Penetrating radiation parameterisation ', penetrating_method, ' not available, using default')
-        subsurface_melt, Si = method_Bintanja(GRID, SWnet, dt)
+        raise ValueError("Penetrating method = \"{:s}\" is not allowed, must be one of {:s}".format(penetrating_method, ", ".join(penetrating_allowed)))
 
     return subsurface_melt, Si
 
@@ -55,7 +53,7 @@ def method_Bintanja(GRID, SWnet, dt):
             # Compute conversion factor A
             A = (spec_heat_ice*ice_density)/(water_density*lat_heat_melting)
 
-             # Changes in volumetric contents
+            # Changes in volumetric contents; dtheta_w change in water fraciont and dtheate_i change in ice fraction
             dtheta_w = A * dT * GRID.get_node_ice_fraction(idxNode)
             dtheta_i = (water_density/ice_density) * -dtheta_w
             dh = -dtheta_i/GRID.get_node_ice_fraction(idxNode)
@@ -65,10 +63,14 @@ def method_Bintanja(GRID, SWnet, dt):
             else:
                 GRID.set_node_liquid_water_content(idxNode, \
                     GRID.get_node_liquid_water_content(idxNode)+dtheta_w)
+                LWC_temp = GRID.get_node_liquid_water_content(idxNode) * GRID.get_node_height(idxNode)
                 GRID.set_node_temperature(idxNode, zero_temperature)
                 GRID.set_node_height(idxNode, (1-dh)*GRID.get_node_height(idxNode))
+                GRID.set_node_liquid_water_content(idxNode, LWC_temp/GRID.get_node_height(idxNode))
 
-            subsurface_melt += dtheta_w
+            subsurface_melt = subsurface_melt + dtheta_w * GRID.get_node_height(idxNode)
+        else:
+            GRID.set_node_temperature(idxNode, T_rad)
 
     # Remove layers which have been melted
     GRID.remove_node(list_of_layers_to_remove)

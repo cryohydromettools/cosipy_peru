@@ -117,10 +117,13 @@ def eb_fluxes(GRID, T0, alpha, z0, T2, rH2, p, G, u2, SLOPE, LWin=None, N=None):
     Ea = (rH2 * Ew) / 100.0
 
     # Calc incoming longwave radiation, if not available Ea has to be in Pa (Konzelmann 1994)
-    if LWin is None:
-        eps_cs = 0.23 + 0.433 * np.power(100*Ea/T2,1.0/8.0)
-        eps_tot = eps_cs * (1 - np.power(N,2)) + 0.984 * np.power(N,2)
+    if LWin_method == 'Konzelmann94':
+        eps_cs = 0.26 + 0.433 * np.power(100*Ea/T2,1.0/7.0)
+        eps_tot = eps_cs * (1 - np.power(N,2)) + 0.996 * np.power(N,2)
         Li = eps_tot * sigma * np.power(T2,4.0)
+    elif LWin_method == 'Sicart11':
+        #print(t_atm)
+        Li = (1.24  * np.power(Ea/T2,1.0/7.0) * (1.40 - t_atm * 0.53) * sigma * np.power(T2,4.0))
     else:
     # otherwise use LW data from file
         Li = LWin

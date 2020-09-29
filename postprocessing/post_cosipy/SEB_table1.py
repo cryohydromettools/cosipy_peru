@@ -20,9 +20,8 @@ from my_fun.hour_to_day_mean import hour_to_day_mean
 from my_fun.hour_to_day_sum import hour_to_day_sum
 from my_fun.select_season import select_dry, select_wet
 
-#filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics = 'out'
 name_f       = 'table1.csv'
 
@@ -221,9 +220,9 @@ MB_d2   = (var1_d[ind_3:ind_4,:,:])
 MB_d    = (np.concatenate((MB_d1,MB_d2), axis=0))
 MB_w    = (var1_d[ind_1_w:ind_2_w,:,:])
 
-SWin_m  = np.nansum(var1_d, axis=0)
-SWin_d  = np.nansum(MB_d, axis=0)
-SWin_w  = np.nansum(MB_w, axis=0)
+SWin_m  = np.nanmean(var1_d, axis=0)
+SWin_d  = np.nanmean(MB_d, axis=0)
+SWin_w  = np.nanmean(MB_w, axis=0)
 
 SWin_m  = select_below(dem_nc,mask_nc,SWin_m,5000)
 SWin_d  = select_below(dem_nc,mask_nc,SWin_d,5000)
@@ -233,16 +232,16 @@ rain_m  = SWin_m
 rain_d  = SWin_d
 rain_w  = SWin_w
 
-var1a   = (ds['SNOWFALL'][:,:,:].values)*1000
+var1a   = (ds['SNOWFALL'][:,:,:].values)
 var1_d  = hour_to_day_sum(days_num,var1a)
 MB_d1   = (var1_d[ind_1:ind_2,:,:])
 MB_d2   = (var1_d[ind_3:ind_4,:,:])
 MB_d    = (np.concatenate((MB_d1,MB_d2), axis=0))
 MB_w    = (var1_d[ind_1_w:ind_2_w,:,:])
 
-SWin_m  = np.nansum(var1_d, axis=0)
-SWin_d  = np.nansum(MB_d, axis=0)
-SWin_w  = np.nansum(MB_w, axis=0)
+SWin_m  = np.nanmean(var1_d, axis=0)
+SWin_d  = np.nanmean(MB_d, axis=0)
+SWin_w  = np.nanmean(MB_w, axis=0)
 
 SWin_m  = select_below(dem_nc,mask_nc,SWin_m,5000)
 SWin_d  = select_below(dem_nc,mask_nc,SWin_d,5000)

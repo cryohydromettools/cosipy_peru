@@ -17,8 +17,7 @@ import matplotlib as mpl
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
 
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'SEB_esp'
 
@@ -45,8 +44,8 @@ ax.yaxis.set_tick_params(which='both', rotation=90)
 ax.set_ylabel('Lat (°)')
 ax.set_xlabel('Lon (°)')
 ax.xaxis.set_label_position('top')
-lab_cbar = np.arange(5,120,14)
-fig.colorbar(im, label = 'Melt Energy (W m$^{-2}$)',
+lab_cbar = np.arange(5,110,20)
+fig.colorbar(im, label = 'Melt Energy (W m$^{-2}$)', format='%1.1f',
              orientation="horizontal", ticks=lab_cbar)
 font_f = 12
 plt.rc('font', size=font_f)          # controls default text sizes

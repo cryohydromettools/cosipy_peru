@@ -18,9 +18,8 @@ from my_fun.nan_helper import nan_helper
 from my_fun.select_below import select_below
 from my_fun.select_season import select_dry, select_wet
 
-#filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics = 'out'
 name_f       = 'table2.csv'
 

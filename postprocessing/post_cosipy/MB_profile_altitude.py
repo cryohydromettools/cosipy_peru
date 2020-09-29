@@ -15,8 +15,7 @@ import matplotlib.pyplot as plt
 from my_fun.nan_helper import nan_helper
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc''
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'MB_elv'
 
@@ -90,7 +89,6 @@ MB_st_40[nans]= np.interp(x(nans), x(~nans), MB_st_40[~nans])
 
 y = var3[:,0]
 x = var3[:,1]
-
 
 fig, (ax0) = plt.subplots(1,1,figsize=(2.5,3.0)) 
 ax0.plot(MB_mean_40,elev_g_20,'-r', lw=0.8)

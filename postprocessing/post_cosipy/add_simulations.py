@@ -20,15 +20,14 @@ from my_fun.nan_helper import nan_helper
 from my_fun.reverse_colourmap import reverse_colourmap
 from scipy.signal import savgol_filter
 
-table_SEB = np.zeros((8)) 
+table_SEB = np.zeros((6)) 
 table_SEB[table_SEB == 0] = np.nan
 
 dir_graphics = 'out' 
 name_f       = 'add_sim.csv'
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_2_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
@@ -38,8 +37,7 @@ MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[0] = np.nanmean(MB_all)
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_3_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
@@ -49,8 +47,7 @@ MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[1] = np.nanmean(MB_all)
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_4_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
@@ -59,8 +56,7 @@ MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[2] = np.nanmean(MB_all)
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_5_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
@@ -69,8 +65,7 @@ MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[3] = np.nanmean(MB_all)
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_6_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
@@ -79,34 +74,11 @@ MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[4] = np.nanmean(MB_all)
 
 #filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_7_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_output   = 'out'
 name_table1  = 'stat_MB'
 name_fig     = 'MB_esp'
 ds = xr.open_dataset(filename_nc)
 MB_all  = np.sum(ds['MB'].values,axis=0)
 table_SEB[5] = np.nanmean(MB_all)
-
-filename_nc  = '../../data/output/Peru_out_50m_8_20160901-20170831.nc' 
-dir_output   = 'out' 
-name_table1  = 'stat_MB'
-name_fig     = 'add_MB'
-ds = xr.open_dataset(filename_nc)
-
-MB_all  = np.sum(ds['MB'].values,axis=0)
-
-table_SEB[6] = np.nanmean(MB_all)
-
-filename_nc  = '../../data/output/Peru_out_50m_9_20160901-20170831.nc'
-dir_output   = 'out'
-name_table1  = 'stat_MB'
-name_fig     = 'add_MB'
-ds = xr.open_dataset(filename_nc)
-
-MB_all  = np.sum(ds['MB'].values,axis=0)
-
-table_SEB[7] = np.nanmean(MB_all)
-
-
 pd.DataFrame(table_SEB).to_csv(dir_graphics+"/"+name_f,sep='\t', float_format='%.3f')

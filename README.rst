@@ -1,5 +1,7 @@
 .. image:: https://cryo-tools.org/wp-content/uploads/2019/11/COSIPY-logo-2500px.png
 
+The coupled snowpack and ice surface energy and mass balance model in Python COSIPY solves the energy balance at the surface and is coupled to an adaptive vertical multi-layer subsurface module.
+
 Documentation
 -------------
 The documentation for COSIPY is available at the following link:
@@ -27,8 +29,11 @@ About
         :target: https://codecov.io/gh/cryotools/cosipy
 
 :Citation:
-    .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.3613921.svg
-        :target: https://doi.org/10.5281/zenodo.3613921
+    .. image:: https://img.shields.io/badge/Citation-GMD%20paper-orange.svg
+        :target: https://www.geosci-model-dev-discuss.net/gmd-2020-21/#discussion
+
+    .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.3902191.svg
+        :target: https://doi.org/10.5281/zenodo.3902191
 
 :License:
     .. image:: https://img.shields.io/badge/License-GPLv3-blue.svg

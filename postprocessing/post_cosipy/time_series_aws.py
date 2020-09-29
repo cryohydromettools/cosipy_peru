@@ -14,11 +14,12 @@ import matplotlib.pyplot as plt
 from matplotlib import dates as mpl_dates
 import matplotlib.dates as mdates
 from my_fun.nan_helper import nan_helper
+
 from my_fun.top_rad import solarFParallel
 
 from my_fun.aws2cosipyConfig import *
 
-cs_file = '../../data/input/Peru/data_aws_peru.csv'
+cs_file = 'in/data_aws_peru.csv'
 start_date = '20160901'
 end_date   = '20170831'
 dir_graphics = 'out'
@@ -49,13 +50,41 @@ rad_t = pd.DataFrame(rad_top,df.index,columns = ['SWtop'])
 
 rad_t = rad_t.resample('D').agg({'SWtop': 'mean'})
 
-
-df = df.resample('D').agg({T2_var: 'mean', RH2_var: 'mean', U2_var: 'mean',
+df0 = df.resample('M').agg({T2_var: 'mean', RH2_var: 'mean', U2_var: 'mean',
                 RRR_var: 'sum', G_var: 'mean', PRES_var: 'mean', N_var:'mean'})
 
-T2 = df[T2_var]         # Temperature
+df1 = df.resample('D').agg({T2_var: 'mean', RH2_var: 'mean', U2_var: 'mean',
+                RRR_var: 'sum', G_var: 'mean', PRES_var: 'mean', N_var:'mean'})
+
+df2 = df1.resample('M').agg({T2_var: 'mean', RH2_var: 'mean', U2_var: 'mean',
+                RRR_var: 'sum', G_var: 'mean', PRES_var: 'mean', N_var:'mean'})
+    
+
+T2 = df[T2_var]-273.15         # Temperature
+T21 = df2[T2_var]-273.15         # Temperature
+T21 = T21-273.15
+
+T21 = df2[U2_var].values # Temperature
+
+T2d = np.round((T21[0]+T21[8]+T21[9]+T21[10]+T21[11])/5,decimals=2)
+T2w = np.round((T21[1]+T21[2]+T21[3]+T21[4]+T21[5]+T21[6]+T21[7])/7,decimals=2)
+T2t = np.round(np.sum(T21)/12,decimals=2)
+T2t1 = (T2d+T2w)/2
+
+
+
 RH2 = df[RH2_var]       # Relative humdity
-U2 = df[U2_var]         # Wind velocity
+
+T21 = df1[U2_var].values         # Wind velocity
+
+T21 = df2[U2_var].values         # Wind velocity
+
+T2d  = np.round((T21[0]+T21[8]+T21[9]+T21[10]+T21[11])/5,decimals=2)
+T2w  = np.round((T21[1]+T21[2]+T21[3]+T21[4]+T21[5]+T21[6]+T21[7])/7,decimals=2)
+T2t  = np.round(np.sum(T21)/12,decimals=2)
+T2ts  = np.round(np.std(T21),decimals=2)
+T2t1 = np.round((T2d+T2w)/2,decimals=2)
+
 G = df[G_var]           # Incoming shortwave radiation
 PRES = df[PRES_var]     # Pressure
 RRR = df[RRR_var]       # Precipitation

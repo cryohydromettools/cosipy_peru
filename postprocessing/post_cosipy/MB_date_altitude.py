@@ -21,8 +21,7 @@ import matplotlib as mpl
 
 
 #y = savgol_filter(x, 5, 2)
-#filename_nc  = 'out/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = 'out/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'MB_time_ele'
 

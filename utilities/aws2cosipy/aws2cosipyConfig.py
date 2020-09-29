@@ -37,7 +37,8 @@ SNOWFALL_var = 'SNOWFALL'
 #------------------------
 # Aggregation to hourly data
 #------------------------
-aggregate_hourly = True
+aggregate = True
+aggregation_step = 'H'
 
 # Delimiter in csv file
 delimiter = '\t'
@@ -57,21 +58,21 @@ timezone_lon = -90.0
 zeni_thld = 85.0
 
 # Albedo timescale (0 to 50)
-albedo_timescale_1 = 8.5  # 
+albedo_timescale_1 = 1.2  # 
 
 # Albedo ice (0.1 to 0.4)
-albedo_ice = 0.3
+albedo_ice = 0.13
 
 # Inicial snow layer
-int_snowheight = 0.2
+int_snowheight = 0.1
 
 #------------------------
 # Point model 
 #------------------------
 point_model = False 
-plon = 10.7779
-plat = 46.807984
-hgt = 4910.0 
+plon =  -8.965561
+plat = -77.629209
+hgt  = 4910.0 
 
 #------------------------
 # Interpolation arguments 
@@ -83,6 +84,6 @@ lapse_T         = -0.0055  # Temp K per  m
 lapse_RH        = 0.000    # RH % per  m (0 to 1)
 lapse_RRR       = 0.0000   # RRR % per m (0 to 1)
 lapse_SNOWFALL  = 0.000    # Snowfall % per m (0 to 1)
-lapse_albedo_1  = 0.05    # Albedo days per m (0 to 50)
+lapse_albedo_1  = 0.010    # Albedo days per m (0 to 50)
 lapse_snow      = 0.002    # Snow layer m per m
-lapse_ice       = 0.0020   # albedo ice (0.0001)
+lapse_ice       = 0.001   # albedo ice (0.0001)

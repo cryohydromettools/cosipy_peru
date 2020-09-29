@@ -16,9 +16,8 @@ from my_fun.create_date import create_date
 from my_fun.hour_to_day_mean import hour_to_day_mean
 from my_fun.nan_helper import nan_helper
 
-#filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
-#filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
-filename_nc  = '../../data/output/Peru_out_50m_1_20160901-20170831.nc'
+filename_nc  = '../../data/output/Peru_output_1_new_20160901-20170831.nc'
+filename_nc  = 'in/Peru_output_1_new_20160901-20170831.nc'
 dir_graphics   = 'out'
 name_fig     = 'SEB_time_ele'
 
@@ -183,7 +182,7 @@ time_d,x,y = var1_d.shape
 var4 = np.zeros((len(elev_g_20),time_d))
 
 for t in range(time_d):
-    var_nc_day  = var1_d[t,:,:]
+    var_nc_day  = var1a[t,:,:]
     var_nc_z = np.zeros((len(elev_g),1))
     z = 0
     for i in range(lat_n):
@@ -328,7 +327,7 @@ ax2.text(pd.Timestamp("2017-08-10"), 5615, "(c)",
              bbox={'facecolor': 'w', 'pad': 2})
 
 im3 = ax3.pcolormesh(date_day, elev_g_20, var4, cmap=plt.get_cmap('jet'),shading='gouraud')
-lab_cbar = np.arange(-138,43,37)
+lab_cbar = np.arange(-135,40,35)
 fig.colorbar(im3,ax=ax3, label = 'Qlat (W m$^{-2}$)', format='%1.1f', ticks=lab_cbar)
 ax3.set_ylim(np.min(elev_g_20), np.max(elev_g_20))
 ax3.set_yticks(np.arange(4800, 6000, 200))
@@ -339,7 +338,7 @@ ax3.text(pd.Timestamp("2017-08-10"), 5615, "(d)",
              bbox={'facecolor': 'w', 'pad': 2})
 
 im4 = ax4.pcolormesh(date_day, elev_g_20, var5, cmap=plt.get_cmap('jet'),shading='gouraud')
-lab_cbar = np.arange(-32,40,20)
+lab_cbar = np.arange(-40,40,15)
 fig.colorbar(im4,ax=ax4, label = 'QG (W m$^{-2}$)', format='%1.1f', ticks=lab_cbar)
 ax4.set_ylim(np.min(elev_g_20), np.max(elev_g_20))
 ax4.set_yticks(np.arange(4800, 6000, 200))
