@@ -1,9 +1,9 @@
 Introduction
 ----------------
 
-The coupled snowpack and ice surface energy and mass balance model in Python (COSIPY) solves the energy balance at the surface and is coupled to an adaptive vertical multi-layer subsurface module. In this repository, we available modified COSIPY code for Artesonraju glacier located in the Peruvian Andes, including all input data from september 2016 to august 2017 and scripts used to generate plots of the COSIPY output. The original code is available in https://github.com/cryotools/cosipy and was develomented by Sauter et al. (2020).
+The coupled snowpack and ice surface energy and mass balance model in Python (COSIPY) solves the energy balance at the surface and is coupled to an adaptive vertical multi-layer subsurface module. In this repository, we available modified COSIPY code for Artesonraju glacier located in the Peruvian Andes, including all input data from september 2016 to august 2017 and scripts used to generate plots of the COSIPY output. The original code is available in https://github.com/cryotools/cosipy and was develoment by Sauter et al. (2020).
 
-In COSIPY_PERU, we included a vertical gradient for the albedo timescale parameter to capture the less frequent occurrence of melting and thus, a slower reduction of albedo, in the higher parts of the glacier (e.g. Gurgiser et al., 2013). In addition, to account the effect of light-absorbing particles on the surface albedo, we included a vertical gradient for the ice albedo due to in Cordillera Blanca glaciers the lower parts have a higher content of LAPs than the higher parts and thus, the surfaces of the lower parts has a lower albedo than the higher surfaces (Schmitt et al., 2015).
+In COSIPY_PERU, we included a vertical gradient for the albedo timescale parameter to capture the less frequent occurrence of melting and thus, a slower reduction of albedo, in the higher parts of the glacier (Gurgiser et al., 2013). In addition, to account the effect of light-absorbing particles on the surface albedo, we included a vertical gradient for the ice albedo due to in Cordillera Blanca glaciers the lower parts have a higher content of LAPs than the higher parts and thus, the surfaces of the lower parts has a lower albedo than the higher surfaces (Schmitt et al., 2015).
 
 
 Documentation
