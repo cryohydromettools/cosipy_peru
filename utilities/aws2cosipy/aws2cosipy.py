@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 import time
 import dateutil
-import math
 from itertools import product
 
 #np.warnings.filterwarnings('ignore')
@@ -19,7 +18,8 @@ sys.path.append('../../')
 
 from utilities.aws2cosipy.aws2cosipyConfig import *
 from cosipy.modules.radCor import correctRadiation
-from cosipy.modules.radCor import solarFParallel
+from constants import *
+
 
 import argparse
 
@@ -43,7 +43,7 @@ def create_1D_input(cs_file, cosipy_file, static_file, start_date, end_date):
     #-----------------------------------
     date_parser = lambda x: dateutil.parser.parse(x, ignoretz=True)
     df = pd.read_csv(cs_file,
-       delimiter=',', index_col=['TIMESTAMP'],
+       delimiter='\t', index_col=['TIMESTAMP'],
         parse_dates=['TIMESTAMP'], na_values='NAN',date_parser=date_parser)
 
     print(df[pd.isnull(df).any(axis=1)])
@@ -81,27 +81,33 @@ def create_1D_input(cs_file, cosipy_file, static_file, start_date, end_date):
     # Load static data
     #-----------------------------------
 
-    if (static_file):
-        print('Read static file %s \n' % (static_file))
-        ds = xr.open_dataset(static_file)
-        ds = ds.isel(lat=plat,lon=plon,method='nearest')
+    if WRF:
+        ds = xr.Dataset()
+        lon, lat = np.meshgrid(plon, plat)
+        ds.coords['lat'] = (('south_north', 'west_east'), lon)
+        ds.coords['lon'] = (('south_north', 'west_east'), lat)
 
     else:
-        ds = xr.Dataset()
-        if WRF:
-            lon, lat = np.meshgrid(plon, plat)
-            ds.coords['lat'] = (('south_north', 'west_east'), lon)
-            ds.coords['lon'] = (('south_north', 'west_east'), lat)
-        else:
-            ds.coords['lon'] = np.array([plon])
-            ds.lon.attrs['standard_name'] = 'lon'
-            ds.lon.attrs['long_name'] = 'longitude'
-            ds.lon.attrs['units'] = 'degrees_east'
+        if (static_file):
+            print('Read static file %s \n' % (static_file))
+            ds = xr.open_dataset(static_file)
+            ds = ds.sel(lat=plat,lon=plon,method='nearest')
+            ds.coords['lon'] = np.array([ds.lon.values])
+            ds.coords['lat'] = np.array([ds.lat.values])
 
+        else:
+            ds = xr.Dataset()
+            ds.coords['lon'] = np.array([plon])
             ds.coords['lat'] = np.array([plat])
-            ds.lat.attrs['standard_name'] = 'lat'
-            ds.lat.attrs['long_name'] = 'latitude'
-            ds.lat.attrs['units'] = 'degrees_north'
+
+        ds.lon.attrs['standard_name'] = 'lon'
+        ds.lon.attrs['long_name'] = 'longitude'
+        ds.lon.attrs['units'] = 'degrees_east'
+
+        ds.coords['lat'] = np.array([plat])
+        ds.lat.attrs['standard_name'] = 'lat'
+        ds.lat.attrs['long_name'] = 'latitude'
+        ds.lat.attrs['units'] = 'degrees_north'
 
     ds.coords['time'] = (('time'), df.index.values)
 
@@ -368,7 +374,7 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     # Get values from file
     #-----------------------------------
     RH2 = df[RH2_var]       # Relative humidity
-    U2 = df[U2_var] * (1/0.8332)        # Wind velocity
+    U2 = df[U2_var]         # Wind velocity
     G = df[G_var]           # Incoming shortwave radiation
     PRES = df[PRES_var]     # Pressure
 
@@ -391,12 +397,10 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     RH_interp = np.zeros([len(dso.time), len(ds.lat), len(ds.lon)])
     U_interp = np.zeros([len(dso.time), len(ds.lat), len(ds.lon)])
     G_interp = np.full([len(dso.time), len(ds.lat), len(ds.lon)], np.nan)
-    Gex_interp = np.zeros([len(dso.time), len(ds.lat), len(ds.lon)])
     P_interp = np.zeros([len(dso.time), len(ds.lat), len(ds.lon)])
     alb_interp = np.zeros((len(ds.lat), len(ds.lon)))
     snow_interp = np.zeros((len(ds.lat), len(ds.lon)))
     alb_interp_ice = np.zeros((len(ds.lat), len(ds.lon)))
-
 
     if (RRR_var in df):
         RRR = df[RRR_var]       # Precipitation
@@ -418,17 +422,17 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     # Interpolate point data to grid 
     #-----------------------------------
     print('Interpolate CR file to grid')
-   
-    alb_interp[:,:] = albedo_timescale_1 + (ds.HGT.values-stationAlt)*lapse_albedo_1
+
+    alb_interp[:,:] = albedo_timescale + (ds.HGT.values-stationAlt)*lapse_albedo # time scale
     alb_interp[alb_interp < 1.0 ]  = 1.0
     alb_interp[alb_interp > 10.0 ] = 10.0
-    snow_interp[:,:] = int_snowheight + (ds.HGT.values-stationAlt)*lapse_snow
+    snow_interp[:,:] = int_snowheight + (ds.HGT.values-stationAlt)*lapse_snow  # initial snow layer
     snow_interp[snow_interp < 0.0 ] = 0.0
-    alb_interp_ice[:,:] = albedo_ice + (ds.HGT.values-stationAlt)*lapse_ice
+    alb_interp_ice[:,:] = albedo_ice + (ds.HGT.values-stationAlt)*lapse_ice  # albedo ice
     alb_interp_ice[alb_interp_ice < 0.10 ] = 0.10
     alb_interp_ice[alb_interp_ice > 0.32 ] = 0.32
-
-  # Interpolate data (T, RH, RRR, U)  to grid using lapse rates
+   
+    # Interpolate data (T, RH, RRR, U)  to grid using lapse rates
     for t in range(len(dso.time)):
         T_interp[t,:,:] = (T2[t]) + (ds.HGT.values-stationAlt)*lapse_T
         RH_interp[t,:,:] = RH2[t] + (ds.HGT.values-stationAlt)*lapse_RH
@@ -481,8 +485,6 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
                 if (mask[i, j] == 1):
                     if radiationModule:
                         G_interp[t,i,j] = np.maximum(0.0, correctRadiation(lats[i],lons[j], timezone_lon, doy, hour, slope[i,j], aspect[i,j], sw[t], zeni_thld))
-                        beta, zeni, azi = solarFParallel(lats[i], lons[j], timezone_lon, doy, hour)
-                        Gex_interp[t,i,j] = 1367.0 * (1 + 0.033 * math.cos(2.0 * math.pi * doy / 366.0)) * math.cos(zeni)
                     else:
                         G_interp[t,i,j] = sw[t]
 
@@ -506,7 +508,6 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     add_variable_along_timelatlon(dso, RH_interp, 'RH2', '%', 'Relative humidity at 2 m')
     add_variable_along_timelatlon(dso, U_interp, 'U2', 'm s\u207b\xb9', 'Wind velocity at 2 m')
     add_variable_along_timelatlon(dso, G_interp, 'G', 'W m\u207b\xb2', 'Incoming shortwave radiation')
-    add_variable_along_timelatlon(dso, Gex_interp, 'Gex', 'W m\u207b\xb2', 'Extraterrestrial radiation ')
     add_variable_along_timelatlon(dso, P_interp, 'PRES', 'hPa', 'Atmospheric Pressure')
     
     if (RRR_var in df):

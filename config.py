@@ -9,11 +9,10 @@
 # Peru
 time_start = '2016-09-01T00:00'
 time_end   = '2017-08-31T23:00'
-#time_end   = '2016-09-01T15:00'
 
 # Zhadang
 #time_start = '2009-01-01T06:00'
-#time_end   = '2009-01-10T00:00'
+#time_end   = '2010-12-31T00:00'
 
 # Hintereisferner
 #time_start = '2018-09-17T08:00'
@@ -27,9 +26,13 @@ time_end_str=(time_end[0:10]).replace('-','')
 
 data_path = './data/'
 
+# Peru example
+input_netcdf= 'Peru/Peru_stake.nc'
+output_netcdf = 'Peru_C0'+'_'+time_start_str+'-'+time_end_str+'.nc'
+
 # Zhadang example
-input_netcdf = 'Peru/Peru_input_8.nc'
-output_netcdf = 'Peru_out_9_'+time_start_str+'-'+time_end_str+'.nc'
+#input_netcdf= 'Zhadang/Zhadang_ERA5.nc'
+#output_netcdf = 'Zhadang_ERA5_'+time_start_str+'-'+time_end_str+'.nc'
 
 # Hintereisferner example
 #input_netcdf = 'HEF/HEF_input.nc'
@@ -55,12 +58,14 @@ obs_type = 'snowheight'                                     # What kind of stake
 # Dimensions
 WRF = False                                                 # Set to True if you use WRF as input
 
-if WRF is False:
-    northing = 'lat'	                                    # name of dimension	in in- and -output
-    easting = 'lon'					                        # name of dimension in in- and -output
-else:
+northing = 'lat'	                                    # name of dimension	in in- and -output
+easting = 'lon'					                        # name of dimension in in- and -output
+if WRF:
     northing = 'south_north'                                # name of dimension in WRF in- and output
     easting = 'west_east'                                   # name of dimension in WRF in- and output
+
+#Interactive simulation with WRF
+WRF_X_CSPY = False
 
 #-----------------------------------
 # COMPRESSION of output netCDF
@@ -70,7 +75,7 @@ compression_level = 2                                       # Choose value betwe
 #-----------------------------------
 # PARALLELIZATION 
 #-----------------------------------
-slurm_use = True                                         # use SLURM
+slurm_use = False                                           # use SLURM
 workers = None                                              # number of workers, if local cluster is used
 local_port = 8786                                           # port for local cluster
 
@@ -78,6 +83,8 @@ local_port = 8786                                           # port for local clu
 # WRITE FULL FIELDS 
 #-----------------------------------    
 full_field = False                                          # write full fields (2D data) to file
+if WRF_X_CSPY:
+    full_field = True
     
 #-----------------------------------
 # TOTAL PRECIPITATION  
