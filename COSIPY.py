@@ -42,7 +42,7 @@ from dask.diagnostics import ProgressBar
 from dask.distributed import progress, wait, as_completed
 import dask
 from tornado import gen
-from dask_jobqueue import SLURMCluster
+#from dask_jobqueue import SLURMCluster
 
 import scipy
 

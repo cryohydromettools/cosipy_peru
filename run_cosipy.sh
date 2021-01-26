@@ -5,7 +5,7 @@ python3 free_parameter_line.py
 
 cd ../
 
-cp optimisation/constants.py ../cosipy_peru/
+cp optimisation/constants.py ../cosipy/
 
 cd utilities/aws2cosipy
 

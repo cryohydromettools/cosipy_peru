@@ -424,7 +424,7 @@ def create_2D_input(cs_file, cosipy_file, static_file, start_date, end_date, x0=
     print('Interpolate CR file to grid')
 
     alb_interp[:,:] = albedo_timescale + (ds.HGT.values-stationAlt)*lapse_albedo # time scale
-    alb_interp[alb_interp < 1.0 ]  = 1.0
+    alb_interp[alb_interp < 0.5 ]  = 0.5
     alb_interp[alb_interp > 10.0 ] = 10.0
     snow_interp[:,:] = int_snowheight + (ds.HGT.values-stationAlt)*lapse_snow  # initial snow layer
     snow_interp[snow_interp < 0.0 ] = 0.0

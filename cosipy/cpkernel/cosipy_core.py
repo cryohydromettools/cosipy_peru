@@ -224,7 +224,6 @@ def cosipy_core(DATA, indY, indX, GRID_RESTART=None, stake_names=None, stake_dat
         GRID.update_grid()
 
         #--------------------------------------------
-        #--------------------------------------------
         # Calculate albedo and roughness length changes if first layer is snow
         #--------------------------------------------
         #alpha = updateAlbedo(GRID, timestamp)

@@ -12,7 +12,7 @@ time_end   = '2017-08-31T23:00'
 
 # Zhadang
 #time_start = '2009-01-01T06:00'
-#time_end   = '2010-12-31T00:00'
+#time_end   = '2009-01-10T00:00'
 
 # Hintereisferner
 #time_start = '2018-09-17T08:00'
@@ -31,7 +31,7 @@ input_netcdf= 'Peru/Peru_stake.nc'
 output_netcdf = 'Peru_C0'+'_'+time_start_str+'-'+time_end_str+'.nc'
 
 # Zhadang example
-#input_netcdf= 'Zhadang/Zhadang_ERA5.nc'
+#input_netcdf= 'Zhadang/Zhadang_ERA5_2009.nc'
 #output_netcdf = 'Zhadang_ERA5_'+time_start_str+'-'+time_end_str+'.nc'
 
 # Hintereisferner example
@@ -64,7 +64,7 @@ if WRF:
     northing = 'south_north'                                # name of dimension in WRF in- and output
     easting = 'west_east'                                   # name of dimension in WRF in- and output
 
-#Interactive simulation with WRF
+# Interactive simulation with WRF
 WRF_X_CSPY = False
 
 #-----------------------------------

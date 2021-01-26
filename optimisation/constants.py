@@ -16,10 +16,10 @@ densification_method = 'Boone'                  # possibilities: 'Boone','empiri
 penetrating_method = 'Bintanja95'               # possibilities: 'Bintanja95'
 roughness_method = 'Moelg12'                    # possibilities: 'Moelg12'
 saturation_water_vapour_method = 'Sonntag90'    # possibilities: 'Sonntag90'
-thermal_conductivity_method = 'bulk'		# possibilities: 'bulk', 'empirical'
+thermal_conductivity_method = 'bulk'		    # possibilities: 'bulk', 'empirical'
 sfc_temperature_method = 'SLSQP'                # possibilities: 'L-BFGS-B', 'SLSQP'(faster), 'Newton' (Secant, fastest)'
 
-#WRF_X_CSPY: for efficiency and consistency
+# WRF_X_CSPY: for efficiency and consistency
 if WRF_X_CSPY:
     stability_correction = 'MO'
     sfc_temperature_method = 'Newton'
@@ -29,24 +29,24 @@ if WRF_X_CSPY:
 initial_snowheight_constant = 0.0               # Initial snowheight
 initial_snow_layer_heights = 0.0               # Initial thickness of snow layers
 initial_glacier_height = 30.0                   # Initial glacier height without snowlayers
-initial_glacier_layer_heights = 1.0             # Initial thickness of glacier ice layers
+initial_glacier_layer_heights = 0.5             # Initial thickness of glacier ice layers
 
 initial_top_density_snowpack = 200.0            # Top density for initial snowpack
 initial_bottom_density_snowpack = 500.0         # Bottom density for initial snowpack
 
-temperature_bottom = 268.00                     # Lower boundary condition for initial temperature profile (K)
-const_init_temp = 0.5                           # constant for init temperature profile used in exponential function (exponential decay)
+temperature_bottom = 271.00                     # Lower boundary condition for initial temperature profile (K)
+const_init_temp = 0.1                           # constant for init temperature profile used in exponential function (exponential decay)
 
-zlt1 = 0.2					# First depth for temperature interpolation which is used for calculation of ground heat flux
-zlt2 = 0.4					# Second depth for temperature interpolation which is used for calculation of ground heat flux
+zlt1 = 0.1					                    # First depth for temperature interpolation which is used for calculation of ground heat flux
+zlt2 = 0.4					                    # Second depth for temperature interpolation which is used for calculation of ground heat flux
 
 ' MODEL CONSTANTS '
-center_snow_transfer_function = 2.0             # center (50/50) when total precipitation is transferred to snow and rain
-spread_snow_transfer_function = 1               # 1: +-2.5
+center_snow_transfer_function = 2.1             # center (50/50) when total precipitation is transferred to snow and rain
+spread_snow_transfer_function = 0.5             # 1: +-2.5
 mult_factor_RRR = 1.0                           # multiplication factor for RRR
 
-minimum_snow_layer_height = 0.005               # minimum layer height
-minimum_snowfall = 0.0030                        # minimum snowfall per time step in m which is added as new snow
+minimum_snow_layer_height = 0.0053               # minimum layer height
+minimum_snowfall = 0.0033                        # minimum snowfall per time step in m which is added as new snow
 
 
 ' REMESHING OPTIONS'
@@ -56,17 +56,21 @@ layer_stretching = 1.20                         # Stretching factor used by the 
 
 merge_max = 1                                   # How many mergings are allowed per time step
 density_threshold_merging = 5                   # If merging is true threshold for layer densities difference two layer try: 5-10 (kg m^-3)
-temperature_threshold_merging = 0.01            # If mering is true threshold for layer temperatures to merge  try: 0.05-0.1 (K)
+temperature_threshold_merging = 0.1            # If mering is true threshold for layer temperatures to merge  try: 0.05-0.1 (K)
 
 
 ' PHYSICAL CONSTANTS '
 constant_density = 203.                         # constant density of freshly fallen snow [kg m-3], if densification_method is set to 'constant'
 
-albedo_fresh_snow = 0.82                        # albedo of fresh snow [-] (Moelg et al. 2012, TC)
-albedo_firn = 0.53                              # albedo of firn [-] (Moelg et al. 2012, TC)
+albedo_fresh_snow = 0.84                        # albedo of fresh snow [-] (Moelg et al. 2012, TC)
+albedo_firn = 0.48                              # albedo of firn [-] (Moelg et al. 2012, TC)
 albedo_ice = 0.19                                # albedo of ice [-] (Moelg et al. 2012, TC)
-albedo_mod_snow_aging = 1.8                       # effect of ageing on snow albedo [days] (Moelg et al. 2012, TC)
-albedo_mod_snow_depth = 1.0                       # effect of snow depth on albedo [cm] (Moelg et al. 2012, TC)
+albedo_mod_snow_aging = 1.8                      # effect of ageing on snow albedo [days] (Oerlemans and Knap 1998, J. Glaciol.)
+albedo_mod_snow_depth = 1.0                       # effect of snow depth on albedo [cm] (Oerlemans and Knap 1998, J. Glaciol.)
+
+### For tropical glaciers or High Mountain Asia summer-accumulation glaciers (low latitude), the Moelg et al. 2012, TC should be tested for a possible better albedo fit 
+#albedo_mod_snow_aging = 6                      # effect of ageing on snow albedo [days] (Moelg et al. 2012, TC)
+#albedo_mod_snow_depth = 8                      # effect of snow depth on albedo [cm] (Moelg et al. 2012, TC)
 
 roughness_fresh_snow = 0.24                     # surface roughness length for fresh snow [mm] (Moelg et al. 2012, TC)
 roughness_ice = 1.7                             # surface roughness length for ice [mm] (Moelg et al. 2012, TC)
@@ -93,7 +97,7 @@ air_density = 1.1                               # density of air [kg m^(-3)]
 
 sigma = 5.67e-8                                 # Stefan-Bolzmann constant [W m-2 K-4]
 zero_temperature = 273.16                       # Melting temperature [K]
-surface_emission_coeff = 0.95                   # surface emission coefficient [-]
+surface_emission_coeff = 0.99                   # surface emission coefficient [-]
 
 # vertical gradient
 
